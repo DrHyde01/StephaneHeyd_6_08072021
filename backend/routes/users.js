@@ -1,10 +1,12 @@
-// Création de la route user en suivant les insctructions du front-end  
-const express = require('express');
-const router = express.Router();
+// Mise en place des routes concernant la gestion des users ----------------------------------------------------------
+const express = require('express'); // Utilisation de express
+const router = express.Router(); // Et de sa méthode router pour créer notre route
 
-const userCtrl = require('../controllers/user');
+const userCtrl = require('../controllers/users'); // Importation du controller users
+const pwdCtrl = require('../middleware/pwdControl'); // Importation du schéma permettant de contrôler les passwords
 
-router.post('/api/auth/signup', userCtrl.signup);
-router.post('/api/auth/login', userCtrl.login);
+// Création des routes user
+router.post('/signup', pwdCtrl, userCtrl.signup); // Création d'un nouvel user
+router.post('/login', userCtrl.login); // Connexion d'un user existant
 
-module.exports = router;
+module.exports = router; // Exportation du router
