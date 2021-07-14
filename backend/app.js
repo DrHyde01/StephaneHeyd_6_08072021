@@ -30,9 +30,6 @@ const app = express();
   });
  
 app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 
 app.use("/api/sauces", saucesRoutes); // Utilisation du routeur sauces
 app.use("/api/auth", usersRoutes); // Utilisation du routeur users
