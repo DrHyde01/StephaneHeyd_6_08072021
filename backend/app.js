@@ -1,7 +1,8 @@
-// Mise en place de l'application permettant d'utiliser l'API ----------------------------------------------------------------------------------------------
+// Mise en place de l'application permettant d'utiliser l'API -----------------------------------------------------------------------------------------------------------------------
 const express = require("express"); // Express est un framework basé sur node.js, permettant de faciliter l'emploi de l'app
 const bodyParser = require('body-parser'); // Package permettant de parser les requêtes
 const mongoose = require("mongoose"); // Mongoose permet de gérer notre BDD
+const path = require('path'); // On utilise path pour que l'app puisse travailler sur les fichiers et les dossiers
 
 const saucesRoutes = require("./routes/sauces"); // Import du router sauces
 const usersRoutes = require("./routes/users"); // Import du router users
@@ -30,7 +31,7 @@ const app = express();
   });
  
 app.use(bodyParser.json()); 
-
+app.use('/images', express.static(path.join(__dirname, 'images'))); // Pour que Express gère le dossier images de manière statique à chaque requête 
 app.use("/api/sauces", saucesRoutes); // Utilisation du routeur sauces
 app.use("/api/auth", usersRoutes); // Utilisation du routeur users
 
