@@ -10,6 +10,7 @@ const saucesCtrl = require("../controllers/sauces"); // On aura besoin de la log
 router.get('/', auth, saucesCtrl.getAllSauces); // Récupération de la liste des sauces
 router.get('/:id', auth, saucesCtrl.getOneSauce); // Récupération d'une sauce avec ID
 router.post('/', auth, multer, saucesCtrl.createSauce); // Ajout d'une sauce
+router.put('/:id', auth, multer, saucesCtrl.modifySauce); // Modification d'une sauce
 router.delete('/:id', auth, saucesCtrl.deleteSauce); // Suppression d'une sauce
 
 module.exports = router; // Exportation du router 
