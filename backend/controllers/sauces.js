@@ -47,7 +47,8 @@ exports.createSauce = (req, res, next) => {
     usersDisliked: [],
   });
 
-  sauce.save()
+  sauce
+    .save()
     .then(
       // On sauvegarde la sauce dans la BDD
       () => {
@@ -105,18 +106,59 @@ exports.rateSauce = (req, res, next) => {
     // Cas 1, ajout d'un like
     case 1:
       Sauce.updateOne(
-        { _id: req.params.id },
+        { _id: req.params.id }, // Recherche de la sauce par l'id
         {
-          // Recherche de la sauce par l'id
           $inc: { likes: 1 }, // On incrémente un like grâce à l'opérateur inc de mongoDB
-          $push: { usersLiked: req.body.userId }, // Et on rajoute au tableau via push
+          $push: { usersLiked: req.body.userId } // Et on rajoute au tableau via push
         }
       )
         .then(() => res.status(201).json({ message: "Like enregistré" }))
         .catch((error) => res.status(400).json({ error }));
-      break;
+    break;
 
-    // Cas 0, annulation d'un like ou d'un dislike
+    // Cas O, annulation d'un like ou d'un dislike
+    case 0:
+      Sauce.findOne({ _id: req.params.id }) // On va vérifier si l'user est déjà présent dans le tableau usersLiked ou dans usersDisliked
+        .then((sauces) => {
+          if (sauces.usersLiked.find(user => user === req.body.userId)) {
+            // Si l'user est présent dans usersLiked
+            Sauce.updateOne(
+              { _id: req.params.id },
+              {
+                $inc: { likes: -1 }, // On soustraie le like
+                $pull: { usersLiked: req.body.userId } // On le soustraie du tableau
+              }
+            )
+            .then(() => {
+              res.status(201).json({ message: "Note mise à jour" });
+            }).catch((error) => {
+              res.status(400).json({ error });
+            });
+          }
+
+          if (sauces.usersDisliked.find(user => user === req.body.userId)) {
+            // Si l'user est présent dans usersDisliked
+            Sauce.updateOne(
+              { _id: req.params.id },
+              {
+                $inc: { dislikes: -1 }, // On soustraie le dislike
+                $pull: { usersDisliked: req.body.userId } //On le soustraie du tableau
+              }
+            )
+            .then(() => {
+              res.status(201).json({ message: "Note mise à jour" });
+            }).catch((error) => {
+              res.status(400).json({ error });
+            });
+          }
+        })
+
+        .catch((error) => {
+          res.status(404).json({ error });
+        });
+    break;
+
+    // Cas -1, ajout d'un dislike
     case -1:
       Sauce.updateOne(
         { _id: req.params.id },
@@ -128,6 +170,6 @@ exports.rateSauce = (req, res, next) => {
       )
         .then(() => res.status(201).json({ message: "Dislike enregistré" }))
         .catch((error) => res.status(400).json({ error }));
-      break;
+    break;
   }
 };
