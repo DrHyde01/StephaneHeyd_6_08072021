@@ -13,7 +13,7 @@ Ce projet repose sur les axes suivants :
 ### Installation :computer:
 
 Clonez le repo, le fork de OC contenant le frontend y est déjà présent.  
-Si besoin voici le lien vers le repo OC : `https://github.com/OpenClassrooms-Student-Center/dwj-projet6.git` 
+Si besoin voici [le lien vers le repo OC](https://github.com/OpenClassrooms-Student-Center/dwj-projet6.git)  
 
 #### Pour lancer le frontend procédez ainsi : 
 * Placez vous dans le dossier frontend
