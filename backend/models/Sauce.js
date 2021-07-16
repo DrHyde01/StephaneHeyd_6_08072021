@@ -12,10 +12,10 @@ const sauceSchema = mongoose.Schema({
     mainPepper : { type : String, required: true},
     imageUrl : { type : String, required: true},
     heat : { type : Number, required: true}, // Nombre entre 1 et 10 décrivant la sauce
-    likes : { type : Number, required: true},
-    dislikes : { type : Number, required: true},
-    usersLiked : { type : [String], required: true}, // Tableau d'identifiants d'utilisateurs ayant aimé la sauce
-    usersDisliked :  { type : [String], required: true} // Tableau d'identifiants d'utilisateurs n'ayant pas aimé la sauce
+    likes : { type : Number, defaut: 0, required: false},
+    dislikes : { type : Number, defaut: 0, required: false},
+    usersLiked : { type : [String], required: false}, // Tableau d'identifiants d'utilisateurs ayant aimé la sauce
+    usersDisliked :  { type : [String], required: false} // Tableau d'identifiants d'utilisateurs n'ayant pas aimé la sauce
 });
 
 sauceSchema.plugin(sanitizerPlugin);

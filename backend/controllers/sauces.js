@@ -1,6 +1,7 @@
 // Ce controller contient toute la logique métier de notre interface sauces -------------------------------------------------------
 const Sauce = require("../models/Sauce"); // Importation du modèle sauce
 const fs = require("fs"); // Permet la manipulation de fichiers
+
 // Récupération d'une sauce avec son ID --------------------------------------------------------------------------------
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({
@@ -46,8 +47,7 @@ exports.createSauce = (req, res, next) => {
     usersDisliked: [],
   });
 
-  sauce
-    .save()
+  sauce.save()
     .then(
       // On sauvegarde la sauce dans la BDD
       () => {
@@ -79,7 +79,7 @@ exports.modifySauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-// Suppression d'une sauce -----------------------------------------------------------------------------------------
+// Suppression d'une sauce -------------------------------------------------------------------------------------------
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({
     _id: req.params.id,
@@ -96,4 +96,38 @@ exports.deleteSauce = (req, res, next) => {
       });
     })
     .catch((error) => res.status(500).json({ error }));
+};
+
+// Gestion de la notation d'une sauce ------------------------------------------------------------------------------
+exports.rateSauce = (req, res, next) => {
+  //On utilise l'instruction switch pour lier des actions aux différents cas de figure :
+  switch (req.body.like) {
+    // Cas 1, ajout d'un like
+    case 1:
+      Sauce.updateOne(
+        { _id: req.params.id },
+        {
+          // Recherche de la sauce par l'id
+          $inc: { likes: 1 }, // On incrémente un like grâce à l'opérateur inc de mongoDB
+          $push: { usersLiked: req.body.userId }, // Et on rajoute au tableau via push
+        }
+      )
+        .then(() => res.status(201).json({ message: "Like enregistré" }))
+        .catch((error) => res.status(400).json({ error }));
+      break;
+
+    // Cas 0, annulation d'un like ou d'un dislike
+    case -1:
+      Sauce.updateOne(
+        { _id: req.params.id },
+        {
+          // Recherche de la sauce par l'id
+          $inc: { dislikes: 1 }, // On incrémente un dislike grâce à l'opérateur inc de mongoDB
+          $push: { usersDisliked: req.body.userId }, // Et on rajoute au tableau via push
+        }
+      )
+        .then(() => res.status(201).json({ message: "Dislike enregistré" }))
+        .catch((error) => res.status(400).json({ error }));
+      break;
+  }
 };

@@ -12,6 +12,7 @@ router.get('/:id', auth, saucesCtrl.getOneSauce); // Récupération d'une sauce 
 router.post('/', auth, multer, saucesCtrl.createSauce); // Ajout d'une sauce
 router.put('/:id', auth, multer, saucesCtrl.modifySauce); // Modification d'une sauce
 router.delete('/:id', auth, saucesCtrl.deleteSauce); // Suppression d'une sauce
+router.post('/:id/like', auth, saucesCtrl.rateSauce); // Notation d'une sauce
 
 module.exports = router; // Exportation du router 
 
