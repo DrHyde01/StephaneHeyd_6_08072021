@@ -12,7 +12,8 @@ Ce projet repose sur les axes suivants :
 
 ### Installation :computer:
 
-Clonez le repo, le fork de OC contenant le frontend y est déjà présent.
+Clonez le repo, le fork de OC contenant le frontend y est déjà présent.  
+Si besoin voici le lien vers le repo OC : `https://github.com/OpenClassrooms-Student-Center/dwj-projet6.git` 
 
 #### Pour lancer le frontend procédez ainsi : 
 * Placez vous dans le dossier frontend
@@ -32,6 +33,6 @@ Clonez le repo, le fork de OC contenant le frontend y est déjà présent.
 Lors de la création d'un user via l'application le mot de passe doit contenir :  
 Au moins 8 caractères, une majuscule, une minuscule, un chiffre, et ne doit pas contenir d'espace  
 
-Par ailleurs pour éviter certaines attaques vous avez droit à 5 essais de connexion, sans quoi vous serez bloqués durant 10 minutes :warning:	
+Par ailleurs pour éviter certaines attaques vous avez droit à 5 essais de connexion via la même IP, sans quoi vous serez bloqués durant 10 minutes :warning:	
 
 
