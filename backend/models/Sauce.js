@@ -1,11 +1,8 @@
+// Création du modèle BDD pour les sauces ---------------------------------------------------------------------------------------------
 const mongoose = require("mongoose");
 
-const sanitizerPlugin = require("mongoose-sanitizer-plugin"); // Permet de désinfecter les inputs pour éviter certaines injections noSQL
-
-
-// Création du modèle BDD pour les sauces ---------------------------------------------------------------------------------------------
 const sauceSchema = mongoose.Schema({
-    userId : { type : String, required: true}, // Id unique MongoDB pour l'user qui a créé une sauce
+    userId : { type : String, required: true}, // Id unique fourni MongoDB pour l'user qui a créé une sauce
     name : { type : String, required: true},
     manufacturer : { type : String, required: true},
     description : { type : String, required: true},
@@ -17,7 +14,5 @@ const sauceSchema = mongoose.Schema({
     usersLiked : { type : [String], required: false}, // Tableau d'identifiants d'utilisateurs ayant aimé la sauce
     usersDisliked :  { type : [String], required: false} // Tableau d'identifiants d'utilisateurs n'ayant pas aimé la sauce
 });
-
-sauceSchema.plugin(sanitizerPlugin);
 
 module.exports = mongoose.model('Sauce', sauceSchema); // Exportation du modèle

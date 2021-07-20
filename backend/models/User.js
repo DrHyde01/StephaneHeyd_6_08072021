@@ -1,9 +1,8 @@
-// Création du modèle User pour la BDD ---------------------------------------------------------------------------------------------------------
+// Création du modèle User pour la BDD -----------------------------------------------------------------------------------------------------------------
 const mongoose = require("mongoose"); // Importation du package Mongoose
 require('mongoose-type-email');
 
-const uniqueValidator = require("mongoose-unique-validator"); // Utilisation du package Unique Validator pour prévalidation des informations
-const sanitizerPlugin = require("mongoose-sanitizer-plugin"); // Permet de désinfecter les inputs pour éviter certaines injections noSQL
+const uniqueValidator = require("mongoose-unique-validator"); // Utilisation du package Unique Validator pour prévalidation des informations uniques
 
 // Création du schéma User -------------------------------------------------------
 const userSchema = mongoose.Schema({
@@ -12,6 +11,4 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.plugin(uniqueValidator);
-userSchema.plugin(sanitizerPlugin);
-
 module.exports = mongoose.model('User', userSchema); // Exportation du modèle
