@@ -2,21 +2,6 @@
 const Sauce = require("../models/Sauce"); // Importation du modèle sauce
 const fs = require("fs"); // Permet la manipulation de fichiers
 
-// Récupération d'une sauce avec son ID --------------------------------------------------------------------------------
-exports.getOneSauce = (req, res, next) => {
-  Sauce.findOne({
-    _id: req.params.id, // On réupère l'id pour accèder à la sauce dans la BDD
-  })
-    .then((sauces) => {
-      res.status(200).json(sauces); // La sauce est transmise au front-end via une promise
-    })
-    .catch((error) => {
-      res.status(404).json({
-        error: error,
-      });
-    });
-};
-
 // Récupération de la liste des sauces présentes--------------------------------------------------------------------
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
@@ -32,6 +17,22 @@ exports.getAllSauces = (req, res, next) => {
       });
     });
 };
+
+// Récupération d'une sauce avec son ID --------------------------------------------------------------------------------
+exports.getOneSauce = (req, res, next) => {
+  Sauce.findOne({
+    _id: req.params.id, // On réupère l'id pour accèder à la sauce dans la BDD
+  })
+    .then((sauces) => {
+      res.status(200).json(sauces); 
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error,
+      });
+    });
+};
+
 // Ajout d'une sauce --------------------------------------------------------------------------------------------------------------
 exports.createSauce = (req, res, next) => {
   const sauceObj = JSON.parse(req.body.sauce); // La nouvelle sauce doit être enregistrée en tant qu'objet
@@ -43,7 +44,7 @@ exports.createSauce = (req, res, next) => {
     }`, // Résolution de l'url complète de l'image
     likes: 0, // Compteur likes à 0
     dislikes: 0, // Idem pour les dislikes
-    usersLiked: [], // Remise du tableau à 0 (vide)
+    usersLiked: [], // Remise du tableau likes / dislikes à 0 (vide)
     usersDisliked: [],
   });
 
@@ -99,7 +100,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-// Gestion de la notation d'une sauce ------------------------------------------------------------------------------
+// Gestion de la notation d'une sauce ----------------------------------------------------------------------------------------------
 exports.rateSauce = (req, res, next) => {
   //On utilise l'instruction switch pour lier des actions aux différents cas de figure :
   switch (req.body.like) {
@@ -109,7 +110,7 @@ exports.rateSauce = (req, res, next) => {
         { _id: req.params.id }, // Recherche de la sauce par l'id
         {
           $inc: { likes: 1 }, // On incrémente un like grâce à l'opérateur inc de mongoDB
-          $push: { usersLiked: req.body.userId } // Et on rajoute au tableau via push
+          $push: { usersLiked: req.body.userId } // Et on rajoute au tableau via push en prenant en compte l'id de l'user
         }
       )
         .then(() => res.status(201).json({ message: "Like enregistré" }))
@@ -118,10 +119,10 @@ exports.rateSauce = (req, res, next) => {
 
     // Cas O, annulation d'un like ou d'un dislike
     case 0:
-      Sauce.findOne({ _id: req.params.id }) // On va vérifier si l'user est déjà présent dans le tableau usersLiked ou dans usersDisliked
+      Sauce.findOne({ _id: req.params.id }) // On va vérifier si l'user id est déjà lié au tableau usersLiked ou usersDisliked
         .then((sauces) => {
           if (sauces.usersLiked.find(user => user === req.body.userId)) {
-            // Si l'user est présent dans usersLiked
+            // Si l'user id est déjà lié à usersLiked
             Sauce.updateOne(
               { _id: req.params.id },
               {
@@ -137,7 +138,7 @@ exports.rateSauce = (req, res, next) => {
           }
 
           if (sauces.usersDisliked.find(user => user === req.body.userId)) {
-            // Si l'user est présent dans usersDisliked
+            // Si l'user id est déjà lié à usersDisliked
             Sauce.updateOne(
               { _id: req.params.id },
               {

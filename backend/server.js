@@ -1,4 +1,4 @@
-const http = require("http"); // Utilisation du package http de Node, penser à passer en HTTPS ! 
+const http = require("http"); // Utilisation du package http de Node
 const app = require("./app"); // Utilisation de l'application Express
 
 // CONFIGURATION DU SERVEUR -------------------------------------------------------------------------------------------

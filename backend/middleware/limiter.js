@@ -1,4 +1,4 @@
-// Middleware mis en place pour réguler les tentatives de connexion et éviter certaines attaques ----------------------- 
+// Middleware mis en place pour réguler les tentatives de connexion et éviter certaines attaques ------------------------------
 const rateLimit = require("express-rate-limit"); // Utilisation du package Express rate limit 
 
 const limiter = rateLimit({

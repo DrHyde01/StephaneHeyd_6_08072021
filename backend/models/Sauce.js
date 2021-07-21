@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 const sauceSchema = mongoose.Schema({
-    userId : { type : String, required: true}, // Id unique fourni MongoDB pour l'user qui a créé une sauce
+    userId : { type : String, required: true}, // Id unique fourni par MongoDB pour l'user qui a créé une sauce
     name : { type : String, required: true},
     manufacturer : { type : String, required: true},
     description : { type : String, required: true},
