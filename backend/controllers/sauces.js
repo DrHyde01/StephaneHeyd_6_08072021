@@ -48,11 +48,8 @@ exports.createSauce = (req, res, next) => {
     usersDisliked: [],
   });
 
-  sauce
-    .save()
-    .then(
-      // On sauvegarde la sauce dans la BDD
-      () => {
+  sauce.save() // On sauvegarde la sauce dans la BDD
+    .then(() => {
         res.status(201).json({
           message: "Votre sauce est enregistrée !",
         });
