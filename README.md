@@ -1,7 +1,12 @@
 # Projet 6 OpenClassrooms
 ## So Pekocko :hot_pepper:	
 
-Ce projet repose sur la mise en place d'une API Rest.
+![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+
+Ce sixième projet du parcours WebDev de OpenClassrooms repose sur la mise en place d'une API Rest.
 L'application permettera aux utilisateurs d'évaluer des sauces piquantes existantes, ou de rajouter leurs sauces favorites.
 
 Ce projet repose sur les axes suivants :  
